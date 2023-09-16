@@ -1,0 +1,111 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="robots" content="noindex,nofollow" />
+    <title>PushMe Server使用方法/注意事项</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-image: linear-gradient(to bottom right, #f0f0f0, #e0e0e0);
+        }
+
+        .container {
+            width: 60%;
+            margin: 10% auto 0;
+            padding: 2% 5%;
+            border-radius: 10px;
+            background-color: #f0f0f0;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        ul li {
+            line-height: 2.3;
+        }
+
+        a {
+            color: #20a53a;
+        }
+        .d1 {
+            width: 60%;
+            margin: 10% auto 0;
+            padding: 2% 5%;
+            border-radius: 10px;
+            background-color: #f0f0f0;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        ul li {
+            line-height: 2.3;
+        }
+
+        a {
+            color: #20a53a;
+        }
+        .d2 {
+            width: 60%;
+            margin: 10% auto 0;
+            padding: 2% 5%;
+            border-radius: 10px;
+            background-color: #f0f0f0;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        ul li {
+            line-height: 2.3;
+        }
+
+        a {
+            color: #20a53a;
+        }
+    </style>
+    <script>
+        function getRandomColor() {
+            var letters = '0123456789ABCDEF';
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        window.addEventListener('DOMContentLoaded', function() {
+            var body = document.querySelector('body');
+            var container = document.querySelector('.container');
+            var d1 = document.querySelector('.d1');
+            var d2 = document.querySelector('.d2');
+            body.style.backgroundImage = `linear-gradient(to bottom right, ${getRandomColor()}, ${getRandomColor()})`;
+            container.style.backgroundColor = '#f0f0f0';
+            d2.style.backgroundColor = '#f0f0f0';
+        });
+    </script>
+</head>
+<body>
+<div class="container">
+    <h1>PushMe Server使用方法/注意事项</h1>
+</div>
+<div class="d1">
+  <PRE>
+    首先，请确保您的手机已安装PushMe，PushMe下载链接 https://push.i-i.me/
+    安装完后，打开PushMe，点击左上角的按钮，选 获取令牌 然后复制弹出来（刚显示）的那一串字符串，这个就是Token，把Token填写到PushMe Server中的Push Token里。
+    Title指的是标题
+    Text指的是文本
+    填上这三项就可以发送了
+  </PRE>
+</div>
+<div class="d2">
+    <h3>Copyright©2023 SuperLinkStudio</h3>
+</div>
+
+</body>
+</html>
