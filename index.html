@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StarryFun私有图床</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+            background: url('https://imgapi.xl0408.top/index.php') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .glass-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 600px;
+            width: 90%; /* 手机端宽度调整为90% */
+            margin-bottom: 20px;
+        }
+
+        .glass-container:last-child {
+            margin-bottom: 0;
+        }
+
+        h1 {
+            color: #fff;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        p {
+            color: #fff;
+            font-size: 1.2rem;
+            line-height: 1.6;
+        }
+
+        .links {
+            color: #fff;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            text-align: left;
+            margin-top: 20px;
+        }
+
+        .links a {
+            color: #fff;
+            text-decoration: none;
+            border-bottom: 1px solid #fff;
+            transition: border-bottom 0.3s ease;
+        }
+
+        .links a:hover {
+            border-bottom: 1px solid transparent;
+        }
+
+        /* 手机端适配 */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2rem; /* 手机端标题字体缩小 */
+            }
+
+            p {
+                font-size: 1rem; /* 手机端正文字体缩小 */
+            }
+
+            .links {
+                font-size: 1rem; /* 手机端链接字体缩小 */
+            }
+
+            .glass-container {
+                padding: 15px; /* 手机端容器内边距缩小 */
+            }
+        }
+    </style>
+    <script src="https://cdn.bootcdn.net/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+</head>
+<body>
+    <div class="glass-container">
+        <h1>StarryFun文件CDN</h1>
+        <p>这是我的个人私有文件CDN，用于存储和管理我的图片资源。</p>
+    </div>
+
+    <div class="glass-container">
+        <div class="links">
+            <p><strong>站点链接：</strong></p>
+            <p><a href="https://picture-go.pages.dev" target="_blank">Cloudflare DEV: cdn-c0u.pages.dev</a></p>
+            <p><a href="https://file-cdn.fmvp.al" target="_blank">线路1: file-cdn.fmvp.al</a></p>
+            <p><a href="https://file-cdn.starryfun.icu" target="_blank">线路2: file-cdn.starryfun.icu</a></p>
+        </div>
+    </div>
+    <script>
+        swal("加载完成", {
+          buttons: false,
+          timer: 500,
+        });
+    </script>
+</body>
+</html>
