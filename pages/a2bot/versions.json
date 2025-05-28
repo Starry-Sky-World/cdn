@@ -1,0 +1,18 @@
+[
+  {
+    "name": "A2Bot",
+    "channel": "Stable",
+    "version": "v2.2.0",
+    "status": "Success",
+    "last_updated": "2025-05-28 10:30",
+    "description": "暂无新的功能推送，日常维护"
+  },
+  {
+    "name": "A2Bot",
+    "channel": "Preview",
+    "version": "v2.3.5",
+    "status": "Success",
+    "last_updated": "2025-05-28 10:30",
+    "description": "支持发送卡片按钮，支持获取2B2T.XIN服务器玩家列表"
+  }
+]
