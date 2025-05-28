@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>项目状态看板</title>
+    <style>
+        /* 全局样式 */
+        body {
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f7f6; /* 柔和的背景色 */
+            color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            background-color: #fff; /* 白色内容区域 */
+            padding: 30px;
+            border-radius: 8px; /* 圆角 */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 柔和的阴影 */
+        }
+
+        h1 {
+            text-align: center;
+            color: #0056b3; /* 蓝色标题 */
+            margin-bottom: 30px;
+        }
+
+        /* 项目列表样式 */
+        .project-list {
+            display: grid; /* 使用Grid布局 */
+            gap: 20px; /* 项目之间的间距 */
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* 自适应列宽 */
+        }
+
+        .project-item {
+            background-color: #e9ecef; /* 项目背景色 */
+            border: 1px solid #dee2e6; /* 边框 */
+            border-left: 5px solid; /* 左侧状态条 */
+            padding: 15px;
+            border-radius: 5px;
+            transition: transform 0.2s ease-in-out; /* 添加hover动画 */
+        }
+
+        .project-item:hover {
+            transform: translateY(-5px); /* 鼠标悬停时上移 */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .project-item h2 {
+            margin-top: 0;
+            color: #007bff; /* 项目名称颜色 */
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        .project-item p {
+            margin: 5px 0;
+            font-size: 0.9em;
+            color: #555;
+        }
+
+        .project-item .status {
+            font-weight: bold;
+            color: #28a745; /* 默认状态颜色 (Success) */
+        }
+
+        /* 状态颜色指示 */
+        .status-success { border-color: #28a745; color: #28a745; } /* 绿色 */
+        .status-warning { border-color: #ffc107; color: #ffc107; } /* 黄色 */
+        .status-danger { border-color: #dc3545; color: #dc3545; } /* 红色 */
+        .status-info    { border-color: #17a2b8; color: #17a2b8; } /* 青色 */
+        .status-secondary { border-color: #6c757d; color: #6c757d; } /* 灰色 */
+
+        /* 加载和错误状态 */
+        #loading-message {
+            text-align: center;
+            font-style: italic;
+            color: #666;
+        }
+
+        #error-message {
+            text-align: center;
+            color: #dc3545; /* 红色错误信息 */
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>项目状态概览</h1>
+
+        <div id="loading-message">加载中...</div>
+        <div id="error-message" style="display: none;"></div>
+        <div class="project-list" id="project-status-list">
+            <!-- 项目状态将通过JavaScript加载到这里 -->
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const projectListDiv = document.getElementById('project-status-list');
+            const loadingMessage = document.getElementById('loading-message');
+            const errorMessage = document.getElementById('error-message');
+
+            // 定义状态到CSS类的映射
+            const statusClasses = {
+                'Success': 'status-success',
+                'Warning': 'status-warning',
+                'Danger': 'status-danger',
+                'Info': 'status-info',
+                'Secondary': 'status-secondary' // 用于未知或次要状态
+                // 可以根据你的versions.json中的状态定义更多映射
+            };
+
+            fetch('versions.json')
+                .then(response => {
+                    // 隐藏加载信息
+                    loadingMessage.style.display = 'none';
+
+                    if (!response.ok) {
+                        // 如果HTTP状态码不是2xx
+                        const errorText = `HTTP error! status: ${response.status}`;
+                        errorMessage.textContent = `加载数据失败: ${errorText}`;
+                        errorMessage.style.display = 'block';
+                        throw new Error(errorText); // 抛出错误以便被catch捕获
+                    }
+                    return response.json(); // 解析JSON
+                })
+                .then(data => {
+                    if (!Array.isArray(data)) {
+                         // 如果数据不是预期的数组格式
+                         const errorText = '数据格式错误，预期为JSON数组。';
+                         errorMessage.textContent = `加载数据失败: ${errorText}`;
+                         errorMessage.style.display = 'block';
+                         throw new Error(errorText);
+                    }
+
+                    // 渲染项目状态
+                    data.forEach(project => {
+                        const projectItem = document.createElement('div');
+                        projectItem.classList.add('project-item');
+
+                        // 根据状态设置左侧边框颜色类
+                        const statusClass = statusClasses[project.status] || 'status-secondary';
+                        projectItem.classList.add(statusClass);
+
+                        projectItem.innerHTML = `
+                            <h2>${project.name || '未知项目'}</h2>
+                            <p><strong>版本:</strong> ${project.version || 'N/A'}</p>
+                            <p><strong class="status ${statusClass}">状态:</strong> ${project.status || '未知'}</p>
+                            <p><strong>最后更新:</strong> ${project.last_updated || 'N/A'}</p>
+                            ${project.description ? `<p>${project.description}</p>` : ''}
+                        `; // 可根据你的json结构添加更多字段
+
+                        projectListDiv.appendChild(projectItem);
+                    });
+                })
+                .catch(error => {
+                    // 捕获任何fetch或解析错误
+                    console.error('Error fetching or parsing versions.json:', error);
+                    // 如果加载信息还在，隐藏它
+                    if (loadingMessage.style.display !== 'none') {
+                        loadingMessage.style.display = 'none';
+                    }
+                     // 如果错误信息未显示，显示它
+                    if (errorMessage.style.display === 'none') {
+                         errorMessage.textContent = `加载数据失败，请检查versions.json文件或网络连接。详细错误: ${error.message}`;
+                         errorMessage.style.display = 'block';
+                    }
+                });
+        });
+    </script>
+
+</body>
+</html>
