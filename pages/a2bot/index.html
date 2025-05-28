@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>项目状态看板</title>
+    <title>项目状态看板 - 多渠道</title>
     <style>
         /* 全局样式 */
         body {
@@ -16,7 +16,7 @@
         }
 
         .container {
-            max-width: 900px;
+            max-width: 1200px; /* 适当增加最大宽度以容纳更多内容 */
             margin: 20px auto;
             background-color: #fff; /* 白色内容区域 */
             padding: 30px;
@@ -30,11 +30,33 @@
             margin-bottom: 30px;
         }
 
+        /* 渠道分组样式 */
+        .channel-section {
+            margin-bottom: 40px; /* 渠道分组之间的间距 */
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee; /* 分隔线 */
+        }
+
+        .channel-section:last-child {
+            border-bottom: none; /* 最后一个分组不需要分隔线 */
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .channel-section h2 {
+            color: #007bff; /* 渠道标题颜色 */
+            margin-top: 0;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #007bff; /* 渠道标题下划线 */
+            display: inline-block; /* 让下划线只与文字同宽 */
+            padding-bottom: 5px;
+        }
+
         /* 项目列表样式 */
         .project-list {
             display: grid; /* 使用Grid布局 */
             gap: 20px; /* 项目之间的间距 */
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* 自适应列宽 */
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* 自适应列宽，适当调整最小宽度 */
         }
 
         .project-item {
@@ -51,10 +73,10 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
 
-        .project-item h2 {
+        .project-item h3 { /* 项目名称改为 h3 */
             margin-top: 0;
-            color: #007bff; /* 项目名称颜色 */
-            font-size: 1.2em;
+            color: #333; /* 项目名称颜色 */
+            font-size: 1.1em;
             margin-bottom: 10px;
         }
 
@@ -75,6 +97,7 @@
         .status-danger { border-color: #dc3545; color: #dc3545; } /* 红色 */
         .status-info    { border-color: #17a2b8; color: #17a2b8; } /* 青色 */
         .status-secondary { border-color: #6c757d; color: #6c757d; } /* 灰色 */
+        .status-unknown { border-color: #6c757d; color: #6c757d; } /* 未知状态使用灰色 */
 
         /* 加载和错误状态 */
         #loading-message {
@@ -88,6 +111,13 @@
             color: #dc3545; /* 红色错误信息 */
             font-weight: bold;
         }
+
+         #no-data-message {
+            text-align: center;
+            font-style: italic;
+            color: #666;
+            margin-top: 20px;
+         }
     </style>
 </head>
 <body>
@@ -97,16 +127,19 @@
 
         <div id="loading-message">加载中...</div>
         <div id="error-message" style="display: none;"></div>
-        <div class="project-list" id="project-status-list">
-            <!-- 项目状态将通过JavaScript加载到这里 -->
+        <div id="no-data-message" style="display: none;">未找到项目状态数据。</div>
+
+        <div id="status-sections">
+            <!-- 渠道分组和项目状态将通过JavaScript加载到这里 -->
         </div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const projectListDiv = document.getElementById('project-status-list');
+            const statusSectionsDiv = document.getElementById('status-sections');
             const loadingMessage = document.getElementById('loading-message');
             const errorMessage = document.getElementById('error-message');
+            const noDataMessage = document.getElementById('no-data-message');
 
             // 定义状态到CSS类的映射
             const statusClasses = {
@@ -114,7 +147,8 @@
                 'Warning': 'status-warning',
                 'Danger': 'status-danger',
                 'Info': 'status-info',
-                'Secondary': 'status-secondary' // 用于未知或次要状态
+                'Secondary': 'status-secondary',
+                'Unknown': 'status-unknown'
                 // 可以根据你的versions.json中的状态定义更多映射
             };
 
@@ -141,24 +175,80 @@
                          throw new Error(errorText);
                     }
 
-                    // 渲染项目状态
-                    data.forEach(project => {
-                        const projectItem = document.createElement('div');
-                        projectItem.classList.add('project-item');
+                    if (data.length === 0) {
+                         noDataMessage.style.display = 'block';
+                         return; // 没有数据，显示无数据消息并停止
+                    }
 
-                        // 根据状态设置左侧边框颜色类
-                        const statusClass = statusClasses[project.status] || 'status-secondary';
-                        projectItem.classList.add(statusClass);
+                    // 隐藏无数据消息以防之前显示
+                    noDataMessage.style.display = 'none';
 
-                        projectItem.innerHTML = `
-                            <h2>${project.name || '未知项目'}</h2>
-                            <p><strong>版本:</strong> ${project.version || 'N/A'}</p>
-                            <p><strong class="status ${statusClass}">状态:</strong> ${project.status || '未知'}</p>
-                            <p><strong>最后更新:</strong> ${project.last_updated || 'N/A'}</p>
-                            ${project.description ? `<p>${project.description}</p>` : ''}
-                        `; // 可根据你的json结构添加更多字段
+                    // 按渠道分组项目
+                    const projectsByChannel = data.reduce((acc, project) => {
+                        const channel = project.channel || '未知渠道'; // 如果没有指定渠道，归类到“未知渠道”
+                        if (!acc[channel]) {
+                            acc[channel] = [];
+                        }
+                        acc[channel].push(project);
+                        return acc;
+                    }, {});
 
-                        projectListDiv.appendChild(projectItem);
+                    // 定义渠道的显示顺序（可选，但能让常用渠道排在前面）
+                    const channelOrder = ['Stable', 'Beta', 'Preview'];
+                    // 获取所有实际存在的渠道，并按照 channelOrder 排序，未在 channelOrder 中的排在后面
+                    const sortedChannels = Object.keys(projectsByChannel).sort((a, b) => {
+                        const indexA = channelOrder.indexOf(a);
+                        const indexB = channelOrder.indexOf(b);
+
+                        if (indexA === -1 && indexB === -1) return 0; // 都在末尾，保持原有顺序
+                        if (indexA === -1) return 1; // a 在末尾
+                        if (indexB === -1) return -1; // b 在末尾
+                        return indexA - indexB; // 按照 channelOrder 排序
+                    });
+
+                    // 渲染按渠道分组的项目状态
+                    sortedChannels.forEach(channel => {
+                        const projects = projectsByChannel[channel];
+                         if (!projects || projects.length === 0) {
+                             // 理论上不会发生，因为我们是根据 projectsByChannel 的key来遍历的
+                             return;
+                         }
+
+                        // 创建渠道分组的 Section
+                        const section = document.createElement('section');
+                        section.classList.add('channel-section');
+
+                        const channelHeading = document.createElement('h2');
+                        channelHeading.textContent = `${channel} 渠道`;
+                        section.appendChild(channelHeading);
+
+                        // 创建项目列表容器
+                        const projectListDiv = document.createElement('div');
+                        projectListDiv.classList.add('project-list');
+
+                        // 渲染当前渠道下的项目
+                        projects.forEach(project => {
+                            const projectItem = document.createElement('div');
+                            projectItem.classList.add('project-item');
+
+                            // 根据状态设置左侧边框颜色类
+                            const statusKey = project.status || 'Unknown'; // 默认为 Unknown
+                            const statusClass = statusClasses[statusKey] || 'status-secondary'; // 如果状态不在映射中，使用 secondary 样式
+                            projectItem.classList.add(statusClass);
+
+                            projectItem.innerHTML = `
+                                <h3>${project.name || '未知项目'}</h3> <!-- 项目名称使用 h3 -->
+                                <p><strong>版本:</strong> ${project.version || 'N/A'}</p>
+                                <p><strong class="status ${statusClass}">状态:</strong> ${project.status || '未知'}</p>
+                                <p><strong>最后更新:</strong> ${project.last_updated || 'N/A'}</p>
+                                ${project.description ? `<p>${project.description}</p>` : ''}
+                            `; // 可根据你的json结构添加更多字段
+
+                            projectListDiv.appendChild(projectItem);
+                        });
+
+                        section.appendChild(projectListDiv); // 将项目列表添加到渠道 Section
+                        statusSectionsDiv.appendChild(section); // 将渠道 Section 添加到主容器
                     });
                 })
                 .catch(error => {
@@ -173,6 +263,8 @@
                          errorMessage.textContent = `加载数据失败，请检查versions.json文件或网络连接。详细错误: ${error.message}`;
                          errorMessage.style.display = 'block';
                     }
+                    // 确保无数据消息也隐藏
+                    noDataMessage.style.display = 'none';
                 });
         });
     </script>
