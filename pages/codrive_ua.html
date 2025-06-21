@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CoDrive云盘平台用户协议</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        .header .subtitle {
+            font-size: 1.1em;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 35px;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 15px;
+            border-left: 5px solid #667eea;
+            transition: all 0.3s ease;
+        }
+
+        .section:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .section h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+
+        .section h2::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: #667eea;
+            border-radius: 50%;
+            margin-right: 12px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.7; }
+        }
+
+        .section h3 {
+            color: #764ba2;
+            font-size: 1.3em;
+            margin: 20px 0 15px 0;
+            font-weight: 500;
+        }
+
+        .section h4 {
+            color: #555;
+            font-size: 1.1em;
+            margin: 15px 0 10px 0;
+            font-weight: 500;
+        }
+
+        .section p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .section ul {
+            margin: 15px 0;
+            padding-left: 25px;
+        }
+
+        .section li {
+            margin-bottom: 8px;
+            position: relative;
+        }
+
+        .section li::marker {
+            color: #667eea;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #ff6b6b 0%, #ee5a24 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 25px 0;
+            font-weight: 600;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.3);
+            animation: glow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { box-shadow: 0 10px 30px rgba(255, 107, 107, 0.3); }
+            to { box-shadow: 0 15px 40px rgba(255, 107, 107, 0.5); }
+        }
+
+        .warning {
+            background: linear-gradient(120deg, #ffa726 0%, #ff7043 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-weight: 500;
+            border-left: 5px solid #ff5722;
+        }
+
+        .contact-info {
+            background: linear-gradient(120deg, #26c6da 0%, #00acc1 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .contact-info a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            border-bottom: 2px solid rgba(255,255,255,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .contact-info a:hover {
+            border-bottom-color: white;
+        }
+
+        .footer {
+            background: #f8f9fa;
+            padding: 30px;
+            text-align: center;
+            color: #666;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .footer p {
+            margin-bottom: 10px;
+        }
+
+        .language-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1001;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: none;
+            border-radius: 25px;
+            padding: 12px 20px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #667eea;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .language-toggle:hover {
+            background: rgba(255, 255, 255, 1);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .language-toggle:active {
+            transform: translateY(0);
+        }
+
+        .content-zh, .content-en {
+            display: none;
+        }
+
+        .content-zh.active, .content-en.active {
+            display: block;
+        }
+
+        .scroll-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(255,255,255,0.3);
+            z-index: 1000;
+        }
+
+        .scroll-progress {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            width: 0%;
+            transition: width 0.1s ease;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                border-radius: 15px;
+            }
+            
+            .header {
+                padding: 30px 20px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .section {
+                padding: 20px;
+                margin-bottom: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="scroll-indicator">
+        <div class="scroll-progress" id="scrollProgress"></div>
+    </div>
+
+    <button class="language-toggle" onclick="toggleLanguage()">English</button>
+
+    <div class="container">
+        <div class="header">
+            <h1 id="main-title">CoDrive云盘平台用户协议</h1>
+            <p class="subtitle" id="subtitle">请仔细阅读并同意以下条款</p>
+        </div>
+
+        <div class="content content-zh active">
+            <div class="section">
+                <h2>1. 协议总则</h2>
+                <p>本协议是您（用户）与CoDrive云盘平台（以下简称"本平台"或"CoDrive"）之间关于使用本平台服务的法律协议。请您在注册使用本平台服务前仔细阅读本协议的全部条款。</p>
+                <p>您点击"同意"或注册、使用本平台服务的行为即表示您已阅读并同意接受本协议的全部条款约束。如您不同意本协议的任意条款，请立即停止注册或使用本平台服务。</p>
+            </div>
+
+            <div class="section">
+                <h2>2. 服务说明</h2>
+                <h3>2.1 服务内容</h3>
+                <p>CoDrive为用户提供云端存储、文件同步、分享等相关服务，包括但不限于：</p>
+                <ul>
+                    <li>文件上传、下载、存储</li>
+                    <li>文件夹创建与管理</li>
+                    <li>文件分享与协作</li>
+                    <li>数据同步与备份</li>
+                </ul>
+                <h3>2.2 服务变更</h3>
+                <p>本平台有权根据业务发展需要，对服务内容进行调整、升级或终止，并会通过平台公告、邮件等方式提前通知用户。</p>
+            </div>
+
+            <div class="section">
+                <h2>3. 用户注册与账户管理</h2>
+                <h3>3.1 注册条件</h3>
+                <ul>
+                    <li>用户应具备完全民事行为能力</li>
+                    <li>提供真实、准确、完整的注册信息</li>
+                    <li>承诺遵守本协议及相关法律法规</li>
+                </ul>
+                <h3>3.2 账户安全</h3>
+                <ul>
+                    <li>用户应妥善保管账户信息，对账户下的所有活动承担责任</li>
+                    <li>如发现账户被盗用或存在安全漏洞，应立即通知本平台</li>
+                    <li>禁止将账户转让、出售或以其他方式提供给第三方使用</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>4. 用户行为规范</h2>
+                <h3>4.1 合法使用</h3>
+                <p>用户在使用本平台服务时，应严格遵守国家法律法规，不得从事以下行为：</p>
+                
+                <div class="highlight">
+                    <h4>4.1.1 严禁违法犯罪内容</h4>
+                    <p><strong>严厉打击黄赌毒相关内容</strong>：严禁存储、传播任何色情、赌博、毒品相关的文件、图片、视频等内容</p>
+                </div>
+                
+                <ul>
+                    <li>禁止存储、传播暴力、恐怖主义、极端主义内容</li>
+                    <li>禁止存储、传播危害国家安全、泄露国家秘密的内容</li>
+                    <li>禁止存储、传播诽谤、诋毁他人名誉的内容</li>
+                </ul>
+
+                <h4>4.1.2 知识产权保护</h4>
+                <ul>
+                    <li>禁止上传侵犯他人著作权、商标权等知识产权的内容</li>
+                    <li>禁止未经授权传播受版权保护的影视作品、音乐、软件等</li>
+                </ul>
+
+                <h4>4.1.3 技术安全</h4>
+                <ul>
+                    <li>禁止上传病毒、木马、恶意代码等危害网络安全的文件</li>
+                    <li>禁止利用技术手段攻击、破坏本平台系统</li>
+                    <li>禁止恶意占用系统资源或影响其他用户正常使用</li>
+                </ul>
+
+                <h3>4.2 内容审核</h3>
+                <p>本平台有权对用户上传的内容进行审核，发现违规内容有权立即删除并采取相应措施，包括但不限于：</p>
+                <ul>
+                    <li>删除违规内容</li>
+                    <li>限制账户功能</li>
+                    <li>暂停或终止服务</li>
+                    <li>向相关部门举报</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>5. 隐私保护</h2>
+                <h3>5.1 信息收集</h3>
+                <p>本平台仅收集为提供服务所必需的用户信息，包括注册信息、使用记录等。</p>
+                <h3>5.2 信息保护</h3>
+                <ul>
+                    <li>采用业界标准的安全技术保护用户数据</li>
+                    <li>不会向第三方出售、租赁或以其他方式披露用户个人信息</li>
+                    <li>法律法规要求或司法机关要求的情况除外</li>
+                </ul>
+                <h3>5.3 数据安全</h3>
+                <ul>
+                    <li>定期备份用户数据，但不承诺数据永不丢失</li>
+                    <li>建议用户自行备份重要数据</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>6. 服务费用</h2>
+                <h3>6.1 免费服务</h3>
+                <p>本平台为用户提供基础的免费存储空间和服务。</p>
+                <h3>6.2 付费服务</h3>
+                <p>如需更大存储空间或高级功能，用户可选择购买付费服务，具体价格以平台公布为准。</p>
+                <h3>6.3 费用变更</h3>
+                <p>本平台有权调整服务价格，调整前会提前30天通知用户。</p>
+            </div>
+
+            <div class="section">
+                <h2>7. 服务中断与终止</h2>
+                <h3>7.1 服务中断</h3>
+                <p>因系统维护、网络故障、不可抗力等原因可能导致服务临时中断，本平台将尽力减少影响并及时恢复服务。</p>
+                <h3>7.2 服务终止</h3>
+                <p>出现以下情况，本平台有权终止向用户提供服务：</p>
+                <ul>
+                    <li>用户严重违反本协议</li>
+                    <li>用户从事违法犯罪活动</li>
+                    <li>用户恶意攻击平台系统</li>
+                    <li>其他严重影响平台正常运营的行为</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>8. 责任限制</h2>
+                <h3>8.1 平台责任</h3>
+                <ul>
+                    <li>本平台仅提供信息存储空间服务</li>
+                    <li>对用户上传内容的合法性不承担审查义务</li>
+                    <li>因不可抗力导致的服务中断或数据丢失，本平台不承担责任</li>
+                </ul>
+                <h3>8.2 用户责任</h3>
+                <ul>
+                    <li>用户对其上传内容的合法性承担全部责任</li>
+                    <li>因用户违法行为导致的一切后果由用户承担</li>
+                    <li>用户应赔偿因其违法行为给本平台造成的损失</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>9. 争议解决</h2>
+                <h3>9.1 协商解决</h3>
+                <p>双方应本着友好协商的原则解决争议。</p>
+                <h3>9.2 法律途径</h3>
+                <p>如协商不成，任何一方均可向本平台所在地有管辖权的人民法院提起诉讼。</p>
+            </div>
+
+            <div class="section">
+                <h2>10. 其他条款</h2>
+                <h3>10.1 协议修改</h3>
+                <p>本平台有权修改本协议，修改后的协议将在平台公布，用户继续使用服务即视为同意修改后的协议。</p>
+                <h3>10.2 法律适用</h3>
+                <p>本协议的解释和争议解决适用中华人民共和国法律。</p>
+                <h3>10.3 联系方式</h3>
+                <div class="contact-info">
+                    <p>如有任何问题或建议，请联系我们：</p>
+                    <p>反馈邮箱：<a href="mailto:liu_qinyu@outlook.com">liu_qinyu@outlook.com</a></p>
+                </div>
+                <h3>10.4 协议生效</h3>
+                <p>本协议自用户同意之日起生效。</p>
+            </div>
+
+            <div class="warning">
+                <strong>特别提醒：</strong>本平台严厉打击黄赌毒等违法违规内容，一经发现将立即删除并可能移交司法机关处理。请用户严格遵守法律法规，共同维护健康的网络环境。
+            </div>
+        </div>
+
+        <div class="content content-en">
+            <div class="section">
+                <h2>1. General Terms</h2>
+                <p>This agreement is a legal agreement between you (the user) and CoDrive Cloud Platform (hereinafter referred to as "the Platform" or "CoDrive") regarding the use of the Platform's services. Please read all terms of this agreement carefully before registering or using the Platform's services.</p>
+                <p>By clicking "Agree" or registering and using the Platform's services, you indicate that you have read and agree to be bound by all terms of this agreement. If you do not agree to any terms of this agreement, please immediately stop registering or using the Platform's services.</p>
+            </div>
+
+            <div class="section">
+                <h2>2. Service Description</h2>
+                <h3>2.1 Service Content</h3>
+                <p>CoDrive provides users with cloud storage, file synchronization, sharing and other related services, including but not limited to:</p>
+                <ul>
+                    <li>File upload, download, and storage</li>
+                    <li>Folder creation and management</li>
+                    <li>File sharing and collaboration</li>
+                    <li>Data synchronization and backup</li>
+                </ul>
+                <h3>2.2 Service Changes</h3>
+                <p>The Platform reserves the right to adjust, upgrade or terminate service content according to business development needs, and will notify users in advance through platform announcements, emails, etc.</p>
+            </div>
+
+            <div class="section">
+                <h2>3. User Registration and Account Management</h2>
+                <h3>3.1 Registration Requirements</h3>
+                <ul>
+                    <li>Users must have full civil capacity</li>
+                    <li>Provide true, accurate, and complete registration information</li>
+                    <li>Commit to comply with this agreement and relevant laws and regulations</li>
+                </ul>
+                <h3>3.2 Account Security</h3>
+                <ul>
+                    <li>Users should properly keep account information and be responsible for all activities under the account</li>
+                    <li>If account theft or security vulnerabilities are discovered, notify the Platform immediately</li>
+                    <li>Prohibited from transferring, selling or otherwise providing accounts to third parties</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>4. User Conduct Standards</h2>
+                <h3>4.1 Legal Use</h3>
+                <p>When using the Platform's services, users must strictly comply with national laws and regulations and must not engage in the following behaviors:</p>
+                
+                <div class="highlight">
+                    <h4>4.1.1 Strictly Prohibited Illegal Criminal Content</h4>
+                    <p><strong>Strictly Combat Pornography, Gambling, and Drug-related Content</strong>: Strictly prohibited from storing or distributing any pornographic, gambling, or drug-related files, images, videos, and other content</p>
+                </div>
+                
+                <ul>
+                    <li>Prohibited from storing or distributing violent, terrorist, or extremist content</li>
+                    <li>Prohibited from storing or distributing content that endangers national security or leaks state secrets</li>
+                    <li>Prohibited from storing or distributing defamatory content that damages others' reputation</li>
+                </ul>
+
+                <h4>4.1.2 Intellectual Property Protection</h4>
+                <ul>
+                    <li>Prohibited from uploading content that infringes on others' copyrights, trademarks, and other intellectual property rights</li>
+                    <li>Prohibited from distributing copyrighted films, music, software, etc. without authorization</li>
+                </ul>
+
+                <h4>4.1.3 Technical Security</h4>
+                <ul>
+                    <li>Prohibited from uploading viruses, trojans, malicious code, and other files that endanger network security</li>
+                    <li>Prohibited from using technical means to attack or damage the Platform's system</li>
+                    <li>Prohibited from maliciously occupying system resources or affecting other users' normal use</li>
+                </ul>
+
+                <h3>4.2 Content Review</h3>
+                <p>The Platform has the right to review user-uploaded content and take appropriate measures upon discovering violations, including but not limited to:</p>
+                <ul>
+                    <li>Delete violating content</li>
+                    <li>Restrict account functions</li>
+                    <li>Suspend or terminate services</li>
+                    <li>Report to relevant authorities</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>5. Privacy Protection</h2>
+                <h3>5.1 Information Collection</h3>
+                <p>The Platform only collects user information necessary to provide services, including registration information, usage records, etc.</p>
+                <h3>5.2 Information Protection</h3>
+                <ul>
+                    <li>Adopt industry-standard security technologies to protect user data</li>
+                    <li>Will not sell, rent, or otherwise disclose user personal information to third parties</li>
+                    <li>Except as required by laws and regulations or judicial authorities</li>
+                </ul>
+                <h3>5.3 Data Security</h3>
+                <ul>
+                    <li>Regularly backup user data, but do not guarantee data will never be lost</li>
+                    <li>Recommend users to backup important data themselves</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>6. Service Fees</h2>
+                <h3>6.1 Free Services</h3>
+                <p>The Platform provides users with basic free storage space and services.</p>
+                <h3>6.2 Paid Services</h3>
+                <p>For larger storage space or advanced features, users can choose to purchase paid services, with specific prices as published by the Platform.</p>
+                <h3>6.3 Fee Changes</h3>
+                <p>The Platform reserves the right to adjust service prices and will notify users 30 days in advance of any adjustments.</p>
+            </div>
+
+            <div class="section">
+                <h2>7. Service Interruption and Termination</h2>
+                <h3>7.1 Service Interruption</h3>
+                <p>Service may be temporarily interrupted due to system maintenance, network failures, force majeure, etc. The Platform will strive to minimize impact and restore services promptly.</p>
+                <h3>7.2 Service Termination</h3>
+                <p>The Platform reserves the right to terminate services to users under the following circumstances:</p>
+                <ul>
+                    <li>User seriously violates this agreement</li>
+                    <li>User engages in illegal criminal activities</li>
+                    <li>User maliciously attacks the Platform's system</li>
+                    <li>Other behaviors that seriously affect the Platform's normal operation</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>8. Limitation of Liability</h2>
+                <h3>8.1 Platform Responsibility</h3>
+                <ul>
+                    <li>The Platform only provides information storage space services</li>
+                    <li>Does not bear the obligation to review the legality of user-uploaded content</li>
+                    <li>Not responsible for service interruptions or data loss caused by force majeure</li>
+                </ul>
+                <h3>8.2 User Responsibility</h3>
+                <ul>
+                    <li>Users bear full responsibility for the legality of their uploaded content</li>
+                    <li>Users bear all consequences resulting from their illegal behavior</li>
+                    <li>Users should compensate for losses caused to the Platform by their illegal behavior</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>9. Dispute Resolution</h2>
+                <h3>9.1 Negotiated Settlement</h3>
+                <p>Both parties should resolve disputes through friendly negotiation.</p>
+                <h3>9.2 Legal Remedies</h3>
+                <p>If negotiation fails, either party may file a lawsuit with a competent people's court at the Platform's location.</p>
+            </div>
+
+            <div class="section">
+                <h2>10. Other Terms</h2>
+                <h3>10.1 Agreement Modifications</h3>
+                <p>The Platform reserves the right to modify this agreement. Modified agreements will be published on the Platform, and continued use of services by users constitutes agreement to the modified terms.</p>
+                <h3>10.2 Applicable Law</h3>
+                <p>The interpretation and dispute resolution of this agreement shall be governed by the laws of the People's Republic of China.</p>
+                <h3>10.3 Contact Information</h3>
+                <div class="contact-info">
+                    <p>For any questions or suggestions, please contact us:</p>
+                    <p>Feedback Email: <a href="mailto:liu_qinyu@outlook.com">liu_qinyu@outlook.com</a></p>
+                </div>
+                <h3>10.4 Agreement Effective Date</h3>
+                <p>This agreement takes effect from the date the user agrees to it.</p>
+            </div>
+
+            <div class="warning">
+                <strong>Special Reminder:</strong> This Platform strictly combats illegal content such as pornography, gambling, and drugs. Once discovered, it will be immediately deleted and may be handed over to judicial authorities. Please strictly comply with laws and regulations to maintain a healthy online environment together.
+            </div>
+        </div>
+
+        <div class="footer">
+            <p><strong id="footer-title">本协议最终解释权归CoDrive云盘平台所有</strong></p>
+            <p id="footer-version">协议版本：v1.0 | 更新日期：2025年6月</p>
+        </div>
+    </div>
+
+    <script>
+        let isEnglish = false;
+
+        const translations = {
+            zh: {
+                title: "CoDrive云盘平台用户协议",
+                subtitle: "请仔细阅读并同意以下条款",
+                footerTitle: "本协议最终解释权归CoDrive云盘平台所有",
+                footerVersion: "协议版本：v1.0 | 更新日期：2025年6月",
+                buttonText: "English"
+            },
+            en: {
+                title: "CoDrive Cloud Platform User Agreement",
+                subtitle: "Please read and agree to the following terms carefully",
+                footerTitle: "The final interpretation right of this agreement belongs to CoDrive Cloud Platform",
+                footerVersion: "Agreement Version: v1.0 | Updated: June 2025",
+                buttonText: "中文"
+            }
+        };
+
+        function toggleLanguage() {
+            isEnglish = !isEnglish;
+            const lang = isEnglish ? 'en' : 'zh';
+            
+            // Toggle content visibility
+            document.querySelector('.content-zh').classList.toggle('active', !isEnglish);
+            document.querySelector('.content-en').classList.toggle('active', isEnglish);
+            
+            // Update texts
+            document.getElementById('main-title').textContent = translations[lang].title;
+            document.getElementById('subtitle').textContent = translations[lang].subtitle;
+            document.getElementById('footer-title').innerHTML = `<strong>${translations[lang].footerTitle}</strong>`;
+            document.getElementById('footer-version').textContent = translations[lang].footerVersion;
+            document.querySelector('.language-toggle').textContent = translations[lang].buttonText;
+            
+            // Re-observe sections for animation
+            document.querySelectorAll('.section').forEach(section => {
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(20px)';
+                observer.observe(section);
+            });
+        }
+        // 滚动进度条
+        window.addEventListener('scroll', function() {
+            const scrollProgress = document.getElementById('scrollProgress');
+            const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const progress = (scrollTop / scrollHeight) * 100;
+            scrollProgress.style.width = progress + '%';
+        });
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // 添加滚动动画效果
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(20px)';
+            section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
